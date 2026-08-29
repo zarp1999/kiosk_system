@@ -1,0 +1,93 @@
+@import './base.css';
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+code {
+  font-weight: 600;
+  padding: 3px 5px;
+  border-radius: 2px;
+  background-color: var(--color-background-mute);
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace;
+  font-size: 85%;
+}
+
+#root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 32px;
+}
+
+.home {
+  max-width: 640px;
+  text-align: left;
+}
+
+.home-kicker {
+  margin: 0 0 8px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ev-c-text-2);
+  font-weight: 600;
+}
+
+.home h1 {
+  margin: 0 0 16px;
+  font-size: 32px;
+  line-height: 1.3;
+  color: var(--ev-c-text-1);
+}
+
+.home-lead {
+  margin: 0 0 20px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ev-c-text-2);
+}
+
+.home-next {
+  margin: 0 0 28px;
+  padding-left: 20px;
+  color: var(--ev-c-text-1);
+  line-height: 1.8;
+}
+
+.home-button {
+  cursor: pointer;
+  border: 1px solid var(--ev-button-alt-border);
+  border-radius: 20px;
+  padding: 0 20px;
+  line-height: 38px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ev-button-alt-text);
+  background-color: var(--ev-button-alt-bg);
+}
+
+.home-button:hover {
+  border-color: var(--ev-button-alt-hover-border);
+  color: var(--ev-button-alt-hover-text);
+  background-color: var(--ev-button-alt-hover-bg);
+}
+
+.home-result {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--ev-c-text-2);
+}
