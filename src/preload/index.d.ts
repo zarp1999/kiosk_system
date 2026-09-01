@@ -1,8 +1,9 @@
-import { ElectronAPI } from '@electron-toolkit/preload'
+import type { KioskApi } from '../shared/pdf'
 
 declare global {
   interface Window {
-    electron: ElectronAPI
-    api: unknown
+    api: KioskApi
   }
 }
+
+export {}

@@ -1,33 +1,55 @@
 import { useState } from 'react'
+import type { ImportedPdf } from '../../shared/pdf'
+import FileSelectScreen from './screens/FileSelectScreen'
+import HomeScreen from './screens/HomeScreen'
+import PreviewScreen from './screens/PreviewScreen'
+
+type Screen = 'home' | 'files' | 'preview'
 
 function App(): React.JSX.Element {
-  const [ipcResult, setIpcResult] = useState<string>('')
+  const [screen, setScreen] = useState<Screen>('home')
+  const [imported, setImported] = useState<ImportedPdf | null>(null)
 
-  const handlePing = (): void => {
-    window.electron.ipcRenderer.send('ping')
-    setIpcResult('メインプロセスへ ping を送りました（Mac ではコンソールに pong と出ます）')
+  const goHome = async (): Promise<void> => {
+    if (imported) {
+      await window.api.discardImportedPdf(imported.id)
+    }
+    setImported(null)
+    setScreen('home')
   }
 
-  return (
-    <main className="home">
-      <p className="home-kicker">Print Shop Kiosk</p>
-      <h1>印刷屋キオスクシステム</h1>
-      <p className="home-lead">
-        Electron + React + TypeScript の土台です。画面は Mac で作り、印刷と USB の確認は Windows
-        実機で行います。
-      </p>
-      <ul className="home-next">
-        <li>次の実装: USB から PDF を選んでプレビューする</li>
-        <li>
-          Windows: <code>git clone</code> → <code>npm install</code> → <code>npm run dev</code>
-        </li>
-      </ul>
-      <button type="button" className="home-button" onClick={handlePing}>
-        動作確認（IPC ping）
-      </button>
-      {ipcResult ? <p className="home-result">{ipcResult}</p> : null}
-    </main>
-  )
+  const goFiles = async (): Promise<void> => {
+    if (imported) {
+      await window.api.discardImportedPdf(imported.id)
+    }
+    setImported(null)
+    setScreen('files')
+  }
+
+  if (screen === 'files') {
+    return (
+      <FileSelectScreen
+        onBack={() => void goHome()}
+        onImported={(pdf) => {
+          setImported(pdf)
+          setScreen('preview')
+        }}
+      />
+    )
+  }
+
+  if (screen === 'preview' && imported) {
+    return (
+      <PreviewScreen
+        key={imported.id}
+        pdf={imported}
+        onBack={() => void goFiles()}
+        onHome={() => void goHome()}
+      />
+    )
+  }
+
+  return <HomeScreen onStartPrint={() => setScreen('files')} />
 }
 
 export default App
